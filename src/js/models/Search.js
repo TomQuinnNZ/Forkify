@@ -14,7 +14,7 @@ export default class Search {
             this.recipes = result.data.recipes;
         }
         catch(error) {
-            alert(error);
+            alert("There's been a problem connecting to the server.");
         }
     }
 }

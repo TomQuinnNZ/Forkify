@@ -27,24 +27,62 @@ const controlSearch = async () => {
         searchView.clearResults();
         renderLoader(elements.searchResults);
 
-        // 4) Search for recipes
-        await state.search.getResultsAsync();
+        try {
+            // 4) Search for recipes
+            await state.search.getResultsAsync();
 
-        // 5) Render results in the UI
-        Promise.resolve('Success').then(() =>{
-            searchView.clearInput();
+            // 5) Render results in the UI
+            Promise.resolve('Success').then(() => {
+                searchView.clearInput();
+                clearLoader();
+            })
+
+            searchView.renderResults(state.search.recipes);
+        }
+        catch (error) {
+            alert('Load failed - please wait a few moments and try again.');
             clearLoader();
-        })
+        }
 
-        searchView.renderResults(state.search.recipes);
     }
 }
 
 /*
 * Recipe controller
 */
-const r = new Recipe(46956);
-r.getRecipe();
+
+const controlRecipe = async () => {
+    const id = window.location.hash.replace('#', '');
+
+    if (id) {
+        // Prepare UI for changes
+
+        // Create new recipe object
+        state.recipe = new Recipe(id);
+
+        try {
+            // Get recipe data
+            await state.recipe.getRecipe();
+            // Call recipe-specific functions
+            state.recipe.calculateTime();
+            state.recipe.calculateServings();
+            // Render recipe
+            console.log(state.recipe);
+        }
+        catch (error) {
+            console.log(error);
+            alert('Load failed - please wait a few moments and try again.');
+        }
+
+    }
+}
+
+// Condense adding multiple events to a single event listener
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+// const r = new Recipe(46956);
+// r.getRecipe();
+// console.log(r);
 
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -59,6 +97,5 @@ elements.searchResultPages.addEventListener('click', event => {
 
         searchView.clearResults();
         searchView.renderResults(state.search.recipes, goToPage);
-        console.log(goToPage);
     }
 });
