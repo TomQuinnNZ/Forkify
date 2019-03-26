@@ -1,5 +1,6 @@
 // Global app controller
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
 import { elements, renderLoader, clearLoader } from './views/base';
 /* 
@@ -11,6 +12,9 @@ import { elements, renderLoader, clearLoader } from './views/base';
 */
 const state = {};
 
+/*
+* Search controller
+*/
 const controlSearch = async () => {
     // 1) Get the query from the view
     const query = searchView.getInput();
@@ -35,6 +39,12 @@ const controlSearch = async () => {
         searchView.renderResults(state.search.recipes);
     }
 }
+
+/*
+* Recipe controller
+*/
+const r = new Recipe(46956);
+r.getRecipe();
 
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();

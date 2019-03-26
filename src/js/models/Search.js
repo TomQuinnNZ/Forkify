@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { apiKey, proxy } from '../config';
 
 export default class Search {
     constructor(query) {
@@ -6,9 +7,6 @@ export default class Search {
     }
 
     async getResultsAsync() {
-
-        const proxy = 'https://cors.io/';
-        const apiKey = 'd72e0589b5a044ae34edeeeec5519c34';
 
         try {
             const result = await axios(`${proxy}?http://www.food2fork.com/api/search?key=${apiKey}&q=${this.query}`);
