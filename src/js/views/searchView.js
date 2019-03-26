@@ -9,6 +9,7 @@ export const clearInput = () => {
 }
 
 export const clearResults = () => {
+    elements.searchResultPages.innerHTML = '';
     elements.searchResultList.innerHTML = '';
 }
 
@@ -29,7 +30,8 @@ const limitRecipeTitle = (title, recipe, limit = 18) => {
 }
 
 const renderRecipe = recipe => {
-    const markup = `
+    const markup = 
+    `
     <li>
         <a class="results__link" href="${recipe.recipe_id}">
             <figure class="results__fig">
@@ -46,8 +48,52 @@ const renderRecipe = recipe => {
     elements.searchResultList.insertAdjacentHTML('beforeend', markup);
 }
 
-export const renderResults = recipes => {
-    recipes.forEach((current) => {
+const createButton = (page, type) => {
+    const btn = 
+    `
+        <button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1 : page + 1}>
+            <svg class="search__icon">
+                <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
+            </svg>
+            <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+        </button>
+    `
+
+    return btn;
+}
+
+const renderButtons = (page, numResults, resultsPerPage) => {
+    const pages = Math.ceil(numResults / resultsPerPage);
+
+    let button;
+    if (page === 1) {
+        button = createButton(page, 'next');
+    }
+    else if (page < pages) {
+        // one of the middle pages
+        button = 
+        `
+        ${createButton(page, 'prev')}
+        ${createButton(page, 'next')}
+        `
+    }
+    else if (page === pages && pages > 1) {
+        // last page
+        button = createButton(page, 'prev');
+    }
+
+    elements.searchResultPages.insertAdjacentHTML('afterbegin', button);
+}
+
+export const renderResults = (recipes, page = 1, resultsPerPage = 10) => {
+    //render results of current page
+    const start = (page - 1) * resultsPerPage;
+    const end = page * resultsPerPage;
+
+    recipes.slice(start, end).forEach((current) => {
+
         renderRecipe(current);
     });
+
+    renderButtons(page, recipes.length, resultsPerPage);
 }
