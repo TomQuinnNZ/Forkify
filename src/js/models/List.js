@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 
+
 export default class List {
     constructor() {
         this.items = [];
@@ -18,19 +19,14 @@ export default class List {
     }
 
     deleteItem(id) {
-        const index = this.items.findIndex( el => {
-            el.id === id;
-        });
+        const i = this.items.findIndex( el => el.id === id);
         
         // This modifies the original array in-place (mutates)
-        this.items.splice(index, 1);
+        this.items.splice(i, 1);
     }
 
     updateCount(id, newCount) {
-        const item = this.items.find( el => {
-            console.log(`Element ID: ${el.id}`);
-            el.id === id;
-        });
+        const item = this.items.find( el => el.id === id);
 
         item.count = newCount;
     }
