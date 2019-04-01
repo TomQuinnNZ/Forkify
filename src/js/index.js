@@ -110,3 +110,20 @@ elements.searchResultPages.addEventListener('click', event => {
         searchView.renderResults(state.search.recipes, goToPage);
     }
 });
+
+elements.recipe.addEventListener('click', e => {
+    if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+        // Decrease button has been clicked
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServings('dec');
+            recipeView.updateServingAmounts(state.recipe);
+        }
+    }
+    else if (e.target.matches('.btn-increase, .btn-increase *')) {
+        // Increase button has been clicked
+        state.recipe.updateServings('inc');
+        recipeView.updateServingAmounts(state.recipe);
+    }
+
+    console.log(state.recipe);
+});
