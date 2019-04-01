@@ -4,6 +4,7 @@ import Recipe from './models/Recipe';
 import List from './models/List';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 import { elements, renderLoader, clearLoader } from './views/base';
 /* 
 * Global state of the app
@@ -63,7 +64,6 @@ const controlRecipe = async () => {
 
         // Highlight the selected recipe item
         if (state.search) {
-            console.log('got here');
             searchView.highlightSelected(id);
         }
 
@@ -87,6 +87,20 @@ const controlRecipe = async () => {
         }
 
     }
+}
+
+/*
+* List controller
+*/
+const controlList = () => {
+    // Initialise the list if it doesn't exist yet
+    if (!state.list) state.list = new List();
+
+    // Add each ingredient to the list
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.addItem(el.count, el.unit, el.ingredient);
+        listView.renderItem(item);
+    });
 }
 
 // Condense adding multiple events to a single event listener
@@ -125,7 +139,8 @@ elements.recipe.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingAmounts(state.recipe);
     }
+    else if (e.target.matches(`.recipe__btn--add, .recipe__btn--add *`)) {
+        listView.clearItems();
+        controlList();
+    }
 });
-
-// TESTING
-window.l = new List();
