@@ -2,6 +2,8 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Like from './models/Like';
+import LikesList from './models/LikesList';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
@@ -14,6 +16,10 @@ import { elements, renderLoader, clearLoader } from './views/base';
 * - Liked recipes
 */
 const state = {};
+
+// TESTING
+window.likes = new LikesList();
+window.like1 = new Like('xyz', 'Like 1', 'Tom Q', 'google.com');
 
 /*
 * Search controller
