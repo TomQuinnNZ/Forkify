@@ -15,8 +15,4 @@ export default class LikesList extends Array {
     isLiked(id) {
         return this.findIndex(el => el.id === id) !== -1;
     }
-
-    length() {
-        return this.length;
-    }
 }

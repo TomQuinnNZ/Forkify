@@ -18,11 +18,8 @@ import { elements, renderLoader, clearLoader } from './views/base';
 */
 const state = {};
 state.likes = new LikesList();
-
-// TESTING
-// window.likes = new LikesList();
-// window.like1 = new Like('xyz', 'Like 1', 'Tom Q', 'google.com');
-// window.like2 = new Like('abc', 'Like 2', 'Tom Q', 'google.com');
+console.log(`Likes length: ${state.likes.length}`)
+likesView.toggleLikeMenu(state.likes.length);
 
 
 /*
@@ -96,7 +93,6 @@ const controlRecipe = async () => {
             console.log(error);
             alert('Load failed - please wait a few moments and try again.');
         }
-
     }
 }
 
@@ -138,6 +134,8 @@ const controlLike = () => {
         // Remove like from the UI
         console.log(state.likes);
     }
+
+    likesView.toggleLikeMenu(state.likes.length);
 }
 
 // Condense adding multiple events to a single event listener
