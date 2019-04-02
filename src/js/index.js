@@ -18,8 +18,10 @@ import { elements, renderLoader, clearLoader } from './views/base';
 const state = {};
 
 // TESTING
-window.likes = new LikesList();
-window.like1 = new Like('xyz', 'Like 1', 'Tom Q', 'google.com');
+// window.likes = new LikesList();
+// window.like1 = new Like('xyz', 'Like 1', 'Tom Q', 'google.com');
+// window.like2 = new Like('abc', 'Like 2', 'Tom Q', 'google.com');
+
 
 /*
 * Search controller

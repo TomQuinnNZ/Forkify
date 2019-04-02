@@ -1,13 +1,3 @@
-/*
-* TODO
-*
-* Class LikesList()
-* constructor();
-* add(Like like);
-* delete(id);
-* length();
-*/
-
 export default class LikesList extends Array {
     constructor() { 
         super();
@@ -20,6 +10,10 @@ export default class LikesList extends Array {
     delete(id) {
         const i = this.findIndex(el => el.id === id);
         this.splice(i, 1);
+    }
+
+    isLiked(id) {
+        return this.findIndex(el => el.id === id) !== -1;
     }
 
     length() {
