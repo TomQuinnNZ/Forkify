@@ -80,6 +80,7 @@ const controlRecipe = async () => {
             // Render recipe
             clearLoader();
             recipeView.renderRecipe(state.recipe);
+            document.title = `forkify // ${state.recipe.title}`;
         }
         catch (error) {
             console.log(error);
