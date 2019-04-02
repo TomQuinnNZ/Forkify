@@ -112,6 +112,32 @@ const controlList = () => {
     });
 }
 
+/*
+* Likes controller
+*/
+const controlLike = () => {
+    if (!state.likes) state.likes = new LikesList();
+
+    const currentID = state.recipe.id;
+    if (!state.likes.isLiked(currentID)) {
+        // Add the like to the state
+        const newLike = new Like(state.recipe.id, state.recipe.title, state.recipe.publisher, state.recipe.img);
+        state.likes.add(newLike);
+        // Toggle the like button on
+
+        // Add like to the UI 
+        console.log(state.likes);
+    }
+    else {
+        // Remove like from the state
+        state.likes.delete(currentID);
+        // Toggle the like button off
+
+        // Remove like from the UI
+        console.log(state.likes);
+    }
+}
+
 // Condense adding multiple events to a single event listener
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
@@ -152,6 +178,10 @@ elements.recipe.addEventListener('click', e => {
         if (state.list) state.list.empty();
         listView.clearItems();
         controlList();
+    }
+    else if (e.target.matches('.recipe__love, .recipe__love *')) {
+        // Call the likes controller
+        controlLike();
     }
 });
 

@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 export default class Like {
     constructor(id, title, author, img) {
         this.id = id;
