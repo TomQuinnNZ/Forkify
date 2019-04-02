@@ -159,7 +159,13 @@ elements.shopping.addEventListener('click', e => {
     }
     // Handle the 'update count' event - 
     else if (e.target.matches('.shopping__count--value')) {
-        const val = parseFloat(e.target.value, 10);
-        state.list.updateCount(id, val);
+        // If the input is below the minimum amount, set the count in the state list to that minimum amount.
+        if (e.target.value >= e.target.step) {
+            const val = parseFloat(e.target.value, 10);
+            state.list.updateCount(id, val);
+        }
+        else {
+            e.target.value = e.target.step;
+        }
     }
 });
