@@ -7,6 +7,7 @@ import LikesList from './models/LikesList';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likesView from './views/likesView';
 import { elements, renderLoader, clearLoader } from './views/base';
 /* 
 * Global state of the app
@@ -16,6 +17,7 @@ import { elements, renderLoader, clearLoader } from './views/base';
 * - Liked recipes
 */
 const state = {};
+state.likes = new LikesList();
 
 // TESTING
 // window.likes = new LikesList();
@@ -87,7 +89,7 @@ const controlRecipe = async () => {
             state.recipe.calculateServings();
             // Render recipe
             clearLoader();
-            recipeView.renderRecipe(state.recipe);
+            recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
             document.title = `forkify // ${state.recipe.title}`;
         }
         catch (error) {
@@ -124,7 +126,7 @@ const controlLike = () => {
         const newLike = new Like(state.recipe.id, state.recipe.title, state.recipe.publisher, state.recipe.img);
         state.likes.add(newLike);
         // Toggle the like button on
-
+        likesView.toggleLikeButton(true);
         // Add like to the UI 
         console.log(state.likes);
     }
@@ -132,7 +134,7 @@ const controlLike = () => {
         // Remove like from the state
         state.likes.delete(currentID);
         // Toggle the like button off
-
+        likesView.toggleLikeButton(false);
         // Remove like from the UI
         console.log(state.likes);
     }
