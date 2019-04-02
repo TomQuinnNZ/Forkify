@@ -30,4 +30,8 @@ export default class List {
 
         item.count = newCount;
     }
+
+    empty() {
+        this.items = [];
+    }
 }

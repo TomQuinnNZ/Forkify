@@ -140,7 +140,26 @@ elements.recipe.addEventListener('click', e => {
         recipeView.updateServingAmounts(state.recipe);
     }
     else if (e.target.matches(`.recipe__btn--add, .recipe__btn--add *`)) {
+        if (state.list) state.list.empty();
         listView.clearItems();
         controlList();
+    }
+});
+
+elements.shopping.addEventListener('click', e => {
+    // Find the id from the 'data' attribute of the element
+    const id = e.target.closest('.shopping__item').dataset.itemid;
+    
+    // Handle the delete button click event
+    if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+        // Delete from state list
+        state.list.deleteItem(id);
+        // Delete from the list in the UI
+        listView.deleteItem(id);
+    }
+    // Handle the 'update count' event - 
+    else if (e.target.matches('.shopping__count--value')) {
+        const val = parseFloat(e.target.value, 10);
+        state.list.updateCount(id, val);
     }
 });
