@@ -19,7 +19,7 @@ import { elements, renderLoader, clearLoader } from './views/base';
 const state = {};
 state.likes = new LikesList();
 console.log(`Likes length: ${state.likes.length}`)
-likesView.toggleLikeMenu(state.likes.length);
+likesView.toggleLikesMenu(state.likes.length);
 
 
 /*
@@ -124,7 +124,8 @@ const controlLike = () => {
         // Toggle the like button on
         likesView.toggleLikeButton(true);
         // Add like to the UI 
-        console.log(state.likes);
+        console.log(`New like added: ${state.likes}`);
+        likesView.renderLike(newLike);
     }
     else {
         // Remove like from the state
@@ -132,10 +133,11 @@ const controlLike = () => {
         // Toggle the like button off
         likesView.toggleLikeButton(false);
         // Remove like from the UI
-        console.log(state.likes);
+        console.log(`Like removed: ${state.likes}`);
+        likesView.deleteLike(currentID);
     }
 
-    likesView.toggleLikeMenu(state.likes.length);
+    likesView.toggleLikesMenu(state.likes.length);
 }
 
 // Condense adding multiple events to a single event listener
