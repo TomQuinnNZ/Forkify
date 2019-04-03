@@ -1,3 +1,5 @@
+import Like from "./Like";
+
 export default class LikesList extends Array {
     constructor() { 
         super();
@@ -5,7 +7,7 @@ export default class LikesList extends Array {
 
     add(like) {
         this.push(like);
-        
+
         this.persistData();
     }
 
@@ -22,5 +24,17 @@ export default class LikesList extends Array {
 
     persistData() {
         localStorage.setItem('likes', JSON.stringify(this));
+    }
+
+    readStorage() {
+        const storage = JSON.parse(localStorage.getItem('likes'));
+
+        if (storage) {
+            // Loop through storage string and re-create Like objects
+            storage.forEach(obj => {
+                const restoredLike = new Like(obj.id, obj.title, obj.author, obj.img);
+                this.add(restoredLike);
+            });
+        }
     }
 }

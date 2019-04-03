@@ -17,10 +17,6 @@ import { elements, renderLoader, clearLoader } from './views/base';
 * - Liked recipes
 */
 const state = {};
-state.likes = new LikesList();
-console.log(`Likes length: ${state.likes.length}`)
-likesView.toggleLikesMenu(state.likes.length);
-
 
 /*
 * Search controller
@@ -143,9 +139,19 @@ const controlLike = () => {
 // Condense adding multiple events to a single event listener
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-// const r = new Recipe(46956);
-// r.getRecipe();
-// console.log(r);
+window.addEventListener('load', () => {
+    // Read likes from local storage
+    state.likes = new LikesList();
+    state.likes.readStorage();
+
+    // Toggle the likes menu icon on if there is at least one like
+    likesView.toggleLikesMenu(state.likes.length);
+
+    // Render the existing likes
+    state.likes.forEach(like => {
+        likesView.renderLike(like);
+    });
+});
 
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
